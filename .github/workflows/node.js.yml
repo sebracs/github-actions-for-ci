@@ -28,12 +28,12 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        os: [ubuntu-20.04] #, windows-2016]
-        node-version: [ 14] #, 16 ]
+        os: [ubuntu-20.04, windows-2019]
+        node-version: [ 14, 16 ]
     steps:
     - uses: actions/checkout@v3
     - uses: actions/download-artifact@main
-      with: 
+      with:
         name: webpack artifacts
         path: public
     - name: Use Node.js ${{ matrix.node-version }}
@@ -42,9 +42,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install, and test
       run: |
-        (npm audit fix --force) || (npm test -- -u)
         npm install
         npm test
       env:
         CI: true
-    
+
